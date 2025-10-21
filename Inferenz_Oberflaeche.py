@@ -2,7 +2,7 @@ import os.path
 import streamlit as st
 import joblib
 from pathlib import Path
-from pandas import DataFrame
+import pandas as pd
 from model import SentenceBERTVectorizer
 
 
@@ -41,7 +41,7 @@ def load_model():
 nlp_pipeline, classes = load_model()
 st.session_state["classes"] = classes
 
-with st.form():
+with st.form("Eingabe"):
     title = st.text_input("Titel", placeholder="Z.B. 'Great Service'")
     body = st.text_area("Text", placeholder="Z.B. 'The product exceeded my expectations...'")
 
@@ -51,12 +51,11 @@ if submit:
     if not title.strip() or not body.strip():
         st.warning("Bitte gib Titel und Text ein")
     else:
-        input_data = f"{title} {body}"
-        input_df = DataFrame(input_data, index=[0])
+        input_data = list(f"{title} {body}")
 
         try:
             with st.spinner(show_time=True):
-                proba = nlp_pipeline.predict_proba(input_df)[0]
+                proba = nlp_pipeline.predict_proba(input_data)[0]
 
             best_idx = proba.argmax()
             predicted_class = st.session_state["classes"][best_idx]
