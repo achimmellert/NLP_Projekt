@@ -23,7 +23,7 @@ Installiere die benötigten Abhängigkeiten via pip:
 pip install numpy pandas sentence-transformers faiss-cpu bm25s python-igraph leidenalg
 
 
---------------------------------------------------
+---
 
 ## Die Streamlit App
 
