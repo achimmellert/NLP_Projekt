@@ -39,6 +39,7 @@ def load_model():
         st.stop()
 
 nlp_pipeline, classes = load_model()
+
 st.session_state["classes"] = classes
 
 with st.form("Eingabe"):
